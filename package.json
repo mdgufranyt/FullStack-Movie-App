@@ -7,11 +7,9 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "npm install --prefix frontend && npm run build --prefix frontend",
+    "build": "cd frontend && npm install && npx vite build",
     "dev": "vercel dev",
-    "start": "vercel dev",
-    "install:frontend": "npm install --prefix frontend",
-    "build:frontend": "npm run build --prefix frontend"
+    "start": "vercel dev"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
