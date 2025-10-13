@@ -15,21 +15,20 @@ export default async function handler(req, res) {
 
     let email, password;
 
+    // Accept ANY method for testing
     if (req.method === "POST") {
-      // Get from request body
+      console.log("POST method detected");
       const body = req.body;
       email = body?.email;
       password = body?.password;
-    } else if (req.method === "GET") {
-      // Get from query parameters for easy testing
+    } else {
+      console.log("Non-POST method detected, using defaults");
+      // For GET or any other method, use defaults
       email = req.query?.email || "test@test.com";
       password = req.query?.password || "test123";
-    } else {
-      return res.status(405).json({
-        success: false,
-        msg: "Method not allowed. Use GET or POST",
-      });
     }
+
+    console.log("Using email:", email, "password:", password);
 
     if (!email || !password) {
       return res.status(400).json({
