@@ -1,6 +1,12 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+let mongoose, bcrypt, jwt;
+
+try {
+  mongoose = require("mongoose");
+  bcrypt = require("bcryptjs");
+  jwt = require("jsonwebtoken");
+} catch (importError) {
+  console.error("Failed to import dependencies:", importError);
+}
 
 // User Schema
 const userSchema = new mongoose.Schema(
@@ -46,6 +52,15 @@ module.exports = async function handler(req, res) {
   try {
     console.log("Login API called with method:", req.method);
     console.log("Login API URL:", req.url);
+
+    // Check if dependencies are loaded
+    if (!mongoose || !bcrypt || !jwt) {
+      console.error("Dependencies not loaded properly");
+      return res.status(500).json({
+        success: false,
+        msg: "Server configuration error - dependencies missing",
+      });
+    }
 
     // Set CORS headers
     res.setHeader("Access-Control-Allow-Credentials", true);
