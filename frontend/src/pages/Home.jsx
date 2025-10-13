@@ -52,19 +52,19 @@ const Home = () => {
         >
           <SwiperSlide>
             <img
-              src="https://www.femalefirst.co.uk/image-library/land/1000/b/brave-feature-poster.jpg"
+              src="https://wallpapers.com/images/hd/spider-man-2-lva058fvoz0dpt37.jpg"
               alt=""
             />
           </SwiperSlide>
           <SwiperSlide>
             <img
-              src="https://www.femalefirst.co.uk/image-library/land/1000/b/brave-feature-poster.jpg"
+              src="https://wallpapercave.com/wp/wp3405080.jpg"
               alt=""
             />
           </SwiperSlide>
           <SwiperSlide>
             <img
-              src="https://www.femalefirst.co.uk/image-library/land/1000/b/brave-feature-poster.jpg"
+              src="https://wallpapers.com/images/featured/avengers-vm16xv4a69smdauy.jpg"
               alt=""
             />
           </SwiperSlide>
