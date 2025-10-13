@@ -7,7 +7,7 @@
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "cd frontend && npm install && npx vite build",
+    "build": "node build-script.js",
     "dev": "vercel dev",
     "start": "vercel dev"
   },
@@ -17,6 +17,23 @@
     "formidable": "^3.5.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.2",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "vite": "^5.4.7",
+    "react": "^18.3.1",
+    "react-avatar": "^5.0.3",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "swiper": "^11.1.14"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^9.9.0",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "globals": "^15.9.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13"
   }
 }

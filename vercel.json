@@ -1,6 +1,6 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "frontend/dist",
+  "buildCommand": "vite build",
+  "outputDirectory": "dist",
   "functions": {
     "api/**/*.js": {
       "maxDuration": 30
