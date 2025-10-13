@@ -1,3 +1,4 @@
+// Debug endpoint - Updated at 2025-10-14
 export default function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
 

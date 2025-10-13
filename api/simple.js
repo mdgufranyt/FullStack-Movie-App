@@ -1,4 +1,4 @@
-// Simplest possible test function
+// Simplest possible test function - Updated at 2025-10-14
 export default function handler(req, res) {
   console.log("Method:", req.method);
 
