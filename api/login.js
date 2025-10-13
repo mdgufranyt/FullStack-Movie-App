@@ -19,15 +19,20 @@ const User = mongoose.models.User || mongoose.model("User", userSchema);
 // Connect to MongoDB Atlas
 const connectDB = async () => {
   if (mongoose.connections[0].readyState) {
+    console.log('MongoDB already connected');
     return;
   }
 
   try {
+    console.log('Attempting MongoDB connection...');
+    console.log('MongoDB URI exists:', !!process.env.MONGODB_URI);
+    console.log('MongoDB URI length:', process.env.MONGODB_URI ? process.env.MONGODB_URI.length : 0);
+    
     await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("MongoDB connected");
+    console.log("MongoDB connected successfully");
   } catch (error) {
     console.error("MongoDB connection error:", error);
     throw error;
