@@ -15,5 +15,13 @@ export default function handler(req, res) {
     success: true,
     message: "Working! Method was: " + req.method,
     timestamp: new Date().toISOString(),
+    env_debug: {
+      MONGODB_URI_exists: !!process.env.MONGODB_URI,
+      MONGODB_URI_length: process.env.MONGODB_URI
+        ? process.env.MONGODB_URI.length
+        : 0,
+      JWT_SECRET_exists: !!process.env.JWT_SECRET,
+      NODE_ENV: process.env.NODE_ENV,
+    },
   });
 }
