@@ -2,14 +2,15 @@
   "name": "fullstack-movie-app-vercel",
   "version": "1.0.0",
   "private": true,
-  "type": "commonjs",
+  "type": "module",
   "engines": {
     "node": ">=18.0.0"
   },
   "scripts": {
-    "build": "node build-script.js",
-    "dev": "vercel dev",
-    "start": "vercel dev"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
