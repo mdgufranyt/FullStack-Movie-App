@@ -16,13 +16,14 @@ const AdminLogin = () => {
     e.preventDefault();
     setError(""); // Clear previous errors
 
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
-      setError("Please login first as a regular user");
+    if (!email || !pwd || !adminKey) {
+      setError("Please fill in all fields");
       return;
     }
 
     try {
+      console.log("Attempting admin login with:", { email, adminKey });
+
       const response = await fetch(api_base_url + "/checkAdmin", {
         mode: "cors",
         method: "POST",
@@ -30,22 +31,28 @@ const AdminLogin = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userId: userId,
+          email: email,
+          password: pwd,
+          adminKey: adminKey,
         }),
       });
 
       const data = await response.json();
+      console.log("Admin login response:", data);
 
       if (data.success && data.isAdmin) {
         localStorage.setItem("isAdmin", "true");
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId);
+        localStorage.setItem("isLoggedIn", "true");
         setData(data);
-        setTimeout(() => {
-          navigate("/createMovie");
-        }, 100);
+        console.log("Admin login successful, navigating to createMovie...");
+        navigate("/createMovie");
       } else {
-        setError("You are not an admin user");
+        setError(data.msg || "Admin login failed");
       }
     } catch (error) {
+      console.error("Admin login error:", error);
       setError("Network error. Please try again.");
     }
   };

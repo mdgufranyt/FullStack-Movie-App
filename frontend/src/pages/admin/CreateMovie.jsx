@@ -9,6 +9,42 @@ const CreateMovie = () => {
   const [desc, setDesc] = useState("");
   const [video, setVideo] = useState("");
 
+  // Function to convert YouTube URL to embed URL (same as in SingleMovie)
+  const getYouTubeEmbedUrl = (url) => {
+    if (!url) return "";
+
+    // If it's already an embed URL, return as is
+    if (url.includes("youtube.com/embed/")) {
+      return url;
+    }
+
+    // Extract video ID from various YouTube URL formats
+    let videoId = "";
+
+    if (url.includes("youtube.com/watch?v=")) {
+      videoId = url.split("v=")[1];
+      if (videoId.includes("&")) {
+        videoId = videoId.split("&")[0];
+      }
+    } else if (url.includes("youtu.be/")) {
+      videoId = url.split("youtu.be/")[1];
+      if (videoId.includes("?")) {
+        videoId = videoId.split("?")[0];
+      }
+    } else if (url.includes("m.youtube.com/watch?v=")) {
+      videoId = url.split("v=")[1];
+      if (videoId.includes("&")) {
+        videoId = videoId.split("&")[0];
+      }
+    }
+
+    if (videoId) {
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+
+    return url;
+  };
+
   function getImage(e) {
     const file = e.target.files[0];
     let temURL = URL.createObjectURL(file);
@@ -22,10 +58,13 @@ const CreateMovie = () => {
   const createMovie = (e) => {
     e.preventDefault();
 
+    // Convert YouTube URL to embed format before saving
+    const embedVideo = getYouTubeEmbedUrl(video);
+
     let formData = new FormData();
     formData.append("title", title);
     formData.append("desc", desc);
-    formData.append("video", video);
+    formData.append("video", embedVideo);
     formData.append("movieImg", imageFile); // Append the file object, not the URL
 
     // Send to backend
@@ -83,7 +122,7 @@ const CreateMovie = () => {
               onChange={(e) => setVideo(e.target.value)}
               value={video}
               type="text"
-              placeholder="YouTube Video URL"
+              placeholder="YouTube Video URL (e.g., https://www.youtube.com/watch?v=VIDEO_ID)"
             />
           </div>
 
