@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://127.0.0.1:27017/movieApp");
+const uri = process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/movieApp";
+mongoose.connect(uri);
 
 const commentsSchema = new mongoose.Schema({
   commentBy: String,
