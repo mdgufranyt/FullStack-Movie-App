@@ -36,11 +36,20 @@ const connectDB = async () => {
       "MongoDB URI length:",
       process.env.MONGODB_URI ? process.env.MONGODB_URI.length : 0
     );
+    console.log(
+      "MongoDB URI first 20 chars:",
+      process.env.MONGODB_URI ? process.env.MONGODB_URI.substring(0, 20) : "N/A"
+    );
+    console.log(
+      "MongoDB URI last 20 chars:",
+      process.env.MONGODB_URI
+        ? process.env.MONGODB_URI.substring(process.env.MONGODB_URI.length - 20)
+        : "N/A"
+    );
 
     if (!process.env.MONGODB_URI) {
       throw new Error("MONGODB_URI environment variable is not set");
     }
-
     if (process.env.MONGODB_URI.length < 50) {
       throw new Error("MONGODB_URI appears to be incomplete (too short)");
     }
