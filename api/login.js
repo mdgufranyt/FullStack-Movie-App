@@ -37,6 +37,20 @@ const connectDB = async () => {
       process.env.MONGODB_URI ? process.env.MONGODB_URI.length : 0
     );
 
+    if (!process.env.MONGODB_URI) {
+      throw new Error("MONGODB_URI environment variable is not set");
+    }
+
+    if (process.env.MONGODB_URI.length < 50) {
+      throw new Error("MONGODB_URI appears to be incomplete (too short)");
+    }
+
+    if (!process.env.MONGODB_URI.startsWith("mongodb")) {
+      throw new Error(
+        "MONGODB_URI does not appear to be a valid MongoDB connection string"
+      );
+    }
+
     await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
