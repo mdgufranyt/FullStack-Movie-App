@@ -1,108 +1,139 @@
-# FullStack-Movie-App
+# Full Stack Movie App
 
-A full-stack web application for browsing, viewing, and interacting with movies. Built with React, Express, and MongoDB.
+A modern full-stack movie application built with React frontend and Node.js serverless functions for Vercel deployment.
 
 ---
 
 ## Features
 
 ### User Features
-- **Sign Up & Login:** Secure authentication using bcrypt and JWT.
-- **Browse Movies:** Explore movies by categories with interactive carousels.
-- **View Details:** See movie title, description, image, YouTube trailer, and comments.
-- **Commenting:** Add comments to movies and view others' feedback.
+
+- **Sign Up & Login:** Secure authentication using bcrypt and JWT
+- **Browse Movies:** Explore movies with interactive interface
+- **View Details:** See movie title, description, image, YouTube trailer, and comments
+- **Commenting:** Add comments to movies and view others' feedback
 
 ### Admin Features
-- **Admin Login:** Secure admin access via dedicated route and key.
-- **Add Movies:** Upload new movies with title, description, YouTube URL, and image.
-- **Movie Management:** Images are securely uploaded and stored.
+
+- **Admin Login:** Secure admin access for movie management
+- **Add Movies:** Upload new movies with title, description, YouTube URL, and image
+- **Movie Management:** Images are uploaded to Cloudinary for cloud storage
 
 ---
 
-## Technologies Used
+## Tech Stack
 
-- **Frontend:** React, React Router, SwiperJS, Avatar
-- **Backend:** Express, Mongoose, Multer, bcryptjs, JWT
-- **Database:** MongoDB
+- **Frontend:** React 18, React Router DOM, Tailwind CSS, Vite
+- **Backend:** Node.js serverless functions, MongoDB Atlas, JWT authentication
+- **Storage:** Cloudinary for image uploads
+- **Database:** MongoDB Atlas
+- **Deployment:** Vercel
 
 ---
 
-## Getting Started
+## Environment Variables
 
-### Prerequisites
+Create a `.env` file in the root directory with the following variables:
 
-- Node.js & npm
-- MongoDB (local or remote)
+```env
+# MongoDB Atlas Configuration
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/movieApp?retryWrites=true&w=majority
 
-### Installation
+# JWT Secret Key
+JWT_SECRET=your_super_secret_jwt_key_here
+
+# Cloudinary Configuration
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+```
+
+## Local Development
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/mdgufranyt/FullStack-Movie-App.git
    ```
 
 2. **Install dependencies:**
-   - Frontend:
-     ```bash
-     cd frontend
-     npm install
-     ```
-   - Backend:
-     ```bash
-     cd backend
-     npm install
-     ```
 
-3. **Start MongoDB:** (if running locally)
    ```bash
-   mongod
+   npm install
+   cd frontend && npm install
    ```
 
-4. **Start the backend server:**
-   ```bash
-   node index.js
-   ```
+3. **Set up environment variables** (see above)
 
-5. **Start the frontend development server:**
+4. **Start development server:**
    ```bash
    npm run dev
    ```
+
+## Deployment
+
+This app is configured for Vercel deployment:
+
+1. Connect your GitHub repository to Vercel
+2. Set environment variables in Vercel dashboard
+3. Deploy automatically on git push
 
 ---
 
 ## Usage
 
-- Visit the frontend URL (e.g., `http://localhost:5173`)
-- Register or login as a user to browse and comment.
-- Login as admin (via `/adminLogin`) to add new movies.
+- Visit the frontend URL (e.g., `http://localhost:3000`)
+- Register or login as a user to browse and comment
+- Login as admin (via `/adminLogin`) to add new movies
 
 ---
 
-## File Structure
+## Project Structure
 
 ```
-frontend/
-  src/
-    pages/
-    components/
-  App.jsx
-  App.css
-backend/
-  models/
-  routes/
-  uploads/
+├── api/                    # Serverless functions for Vercel
+│   ├── login.js
+│   ├── signUp.js
+│   ├── getMovies.js
+│   ├── getMovie.js
+│   ├── uploadMovie.js
+│   ├── getUserDetails.js
+│   ├── checkAdmin.js
+│   └── createComment.js
+├── frontend/               # React frontend
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── ...
+│   └── ...
+├── vercel.json           # Vercel configuration
+└── package.json          # Root dependencies
 ```
 
 ---
 
-## API Endpoints (Backend)
+## API Endpoints
 
-- `POST /signUp` – User registration
-- `POST /login` – User login
-- `GET /getMovies` – Get all movies
-- `POST /getMovie` – Get details for a single movie
-- `POST /uploadMovie` – Admin: upload a new movie
-- `POST /createComment` – Add a comment to a movie
+- `POST /api/signUp` - User registration
+- `POST /api/login` - User login
+- `GET /api/getMovies` - Get all movies
+- `GET /api/getMovie?id=` - Get single movie
+- `POST /api/uploadMovie` - Upload new movie (admin)
+- `GET /api/getUserDetails` - Get user details
+- `POST /api/checkAdmin` - Check if user is admin
+- `POST /api/createComment` - Create comment
+
+---
+
+## Issues Fixed
+
+1. **Proper Vercel Structure**: Moved API functions to `/api` directory
+2. **Serverless Functions**: Converted to proper Vercel serverless function format
+3. **Database Connection**: Implemented connection caching for serverless
+4. **CORS Headers**: Added proper CORS handling
+5. **Error Handling**: Improved error handling across frontend and backend
+6. **Environment Setup**: Proper environment variable configuration
+7. **Build Configuration**: Updated vercel.json for proper routing
 
 ---
 
