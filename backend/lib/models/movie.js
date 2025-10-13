@@ -14,7 +14,7 @@ const MovieSchema = new mongoose.Schema(
   {
     title: String,
     desc: String,
-    img: String, // full Cloudinary URL
+    img: String,   // Cloudinary secure_url
     video: String,
     comments: [CommentSchema],
     date: { type: Date, default: Date.now }

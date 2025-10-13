@@ -6,7 +6,8 @@ module.exports = async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).json({ success: false, msg: "Method not allowed" });
   try {
     await connectDB();
-    const { movieId, userId, comment } = req.body || {};
+    const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+    const { movieId, userId, comment } = body || {};
     if (!movieId || !userId || !comment) return res.status(400).json({ success: false, msg: "Missing fields" });
 
     const movie = await Movie.findById(movieId);
@@ -15,12 +16,7 @@ module.exports = async function handler(req, res) {
     const user = await User.findById(userId);
     if (!user) return res.json({ success: false, msg: "User not found" });
 
-    movie.comments.push({
-      commentBy: String(user._id),
-      comment,
-      username: user.name
-    });
-
+    movie.comments.push({ commentBy: String(user._id), comment, username: user.name });
     await movie.save();
 
     return res.json({ success: true, msg: "Comment added", comments: movie.comments });

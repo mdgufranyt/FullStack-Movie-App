@@ -5,9 +5,7 @@ const { v2: cloudinary } = require("cloudinary");
 const fs = require("fs");
 
 module.exports.config = {
-  api: {
-    bodyParser: false
-  }
+  api: { bodyParser: false }
 };
 
 cloudinary.config({
@@ -19,10 +17,7 @@ cloudinary.config({
 function parseForm(req) {
   const form = formidable({ multiples: false });
   return new Promise((resolve, reject) => {
-    form.parse(req, (err, fields, files) => {
-      if (err) reject(err);
-      else resolve({ fields, files });
-    });
+    form.parse(req, (err, fields, files) => (err ? reject(err) : resolve({ fields, files })));
   });
 }
 
@@ -30,16 +25,9 @@ function uploadToCloudinary(file) {
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
       { folder: "movie-app-uploads", resource_type: "image" },
-      (error, result) => {
-        if (error) reject(error);
-        else resolve(result);
-      }
+      (error, result) => (error ? reject(error) : resolve(result))
     );
-    if (file.filepath) {
-      fs.createReadStream(file.filepath).pipe(stream);
-    } else {
-      reject(new Error("Invalid file path"));
-    }
+    fs.createReadStream(file.filepath).pipe(stream);
   });
 }
 
@@ -61,13 +49,7 @@ module.exports = async function handler(req, res) {
     const uploaded = await uploadToCloudinary(imageFile);
     const imageUrl = uploaded.secure_url;
 
-    const newMovie = await Movie.create({
-      title,
-      desc,
-      img: imageUrl,
-      video
-    });
-
+    const newMovie = await Movie.create({ title, desc, img: imageUrl, video });
     return res.json({ success: true, msg: "Movie created successfully", movieId: newMovie._id });
   } catch (e) {
     console.error(e);

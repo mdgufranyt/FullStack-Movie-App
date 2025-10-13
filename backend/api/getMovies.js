@@ -6,7 +6,7 @@ module.exports = async function handler(req, res) {
   try {
     await connectDB();
     const movies = await Movie.find({});
-    if (!movies || movies.length === 0) return res.json({ success: false, msg: "No movies found" });
+    if (!movies.length) return res.json({ success: false, msg: "No movies found" });
     return res.json({ success: true, movies });
   } catch (e) {
     console.error(e);

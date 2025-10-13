@@ -11,11 +11,8 @@ async function connectDB() {
     const uri = process.env.MONGODB_URI;
     if (!uri) throw new Error("MONGODB_URI is not set");
     cached.promise = mongoose
-      .connect(uri, {
-        bufferCommands: false,
-        maxPoolSize: 5
-      })
-      .then((m) => m);
+      .connect(uri, { bufferCommands: false, maxPoolSize: 5 })
+      .then(m => m);
   }
   cached.conn = await cached.promise;
   return cached.conn;
