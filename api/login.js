@@ -80,13 +80,25 @@ module.exports = async function handler(req, res) {
     }
 
     if (req.method !== "POST") {
-      return res.status(405).json({ message: "Method not allowed" });
+      return res.status(405).json({
+        success: false,
+        msg: "Method not allowed. Use POST with email and password in body.",
+      });
     }
 
     try {
+      console.log("About to connect to DB...");
       await connectDB();
+      console.log("DB connection successful");
 
+      console.log("Request body:", JSON.stringify(req.body));
       const { email, password } = req.body;
+      console.log(
+        "Extracted email:",
+        email,
+        "password length:",
+        password?.length
+      );
 
       // Validate input
       if (!email || !password) {

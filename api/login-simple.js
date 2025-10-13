@@ -13,15 +13,23 @@ export default async function handler(req, res) {
       return;
     }
 
-    if (req.method !== "POST") {
+    let email, password;
+
+    if (req.method === "POST") {
+      // Get from request body
+      const body = req.body;
+      email = body?.email;
+      password = body?.password;
+    } else if (req.method === "GET") {
+      // Get from query parameters for easy testing
+      email = req.query?.email || "test@test.com";
+      password = req.query?.password || "test123";
+    } else {
       return res.status(405).json({
         success: false,
-        msg: "Method not allowed",
+        msg: "Method not allowed. Use GET or POST",
       });
     }
-
-    // Mock login for testing
-    const { email, password } = req.body;
 
     if (!email || !password) {
       return res.status(400).json({
