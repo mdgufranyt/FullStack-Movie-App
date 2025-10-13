@@ -35,6 +35,9 @@ const connectDB = async () => {
 };
 
 module.exports = async function handler(req, res) {
+  console.log("SignUp API called with method:", req.method);
+  console.log("SignUp API URL:", req.url);
+
   // Set CORS headers
   res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader("Access-Control-Allow-Origin", "*");
