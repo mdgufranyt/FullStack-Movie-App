@@ -63,13 +63,17 @@ module.exports = async function handler(req, res) {
 
     // Validate input
     if (!name || !email || !password) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res
+        .status(400)
+        .json({ success: false, msg: "All fields are required" });
     }
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
+      return res
+        .status(400)
+        .json({ success: false, msg: "User already exists" });
     }
 
     // Hash password
@@ -98,8 +102,10 @@ module.exports = async function handler(req, res) {
     );
 
     res.status(201).json({
+      success: true,
       message: "User created successfully",
       token,
+      userId: newUser._id,
       user: {
         id: newUser._id,
         name: newUser.name,
@@ -110,7 +116,8 @@ module.exports = async function handler(req, res) {
   } catch (error) {
     console.error("Signup error:", error);
     res.status(500).json({
-      message: "Internal server error",
+      success: false,
+      msg: "Internal server error",
       error: error.message,
     });
   }

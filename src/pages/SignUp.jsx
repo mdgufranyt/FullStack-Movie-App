@@ -22,7 +22,6 @@ const SignUp = () => {
         "Content-Type": "Application/json",
       },
       body: JSON.stringify({
-        username: username,
         name: name,
         email: email,
         password: pwd,
@@ -31,8 +30,12 @@ const SignUp = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
+          setData(data);
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("userId", data.userId);
+          localStorage.setItem("isLoggedIn", "true");
           alert("Account Created Successfully");
-          navigate("/login");
+          navigate("/");
         } else {
           setError(data.msg || "Signup failed");
         }

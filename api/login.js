@@ -65,19 +65,23 @@ module.exports = async function handler(req, res) {
     if (!email || !password) {
       return res
         .status(400)
-        .json({ message: "Email and password are required" });
+        .json({ success: false, msg: "Email and password are required" });
     }
 
     // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res
+        .status(400)
+        .json({ success: false, msg: "Invalid credentials" });
     }
 
     // Check password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res
+        .status(400)
+        .json({ success: false, msg: "Invalid credentials" });
     }
 
     // Generate JWT token
@@ -92,8 +96,10 @@ module.exports = async function handler(req, res) {
     );
 
     res.status(200).json({
+      success: true,
       message: "Login successful",
       token,
+      userId: user._id,
       user: {
         id: user._id,
         name: user.name,
@@ -104,7 +110,8 @@ module.exports = async function handler(req, res) {
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({
-      message: "Internal server error",
+      success: false,
+      msg: "Internal server error",
       error: error.message,
     });
   }
