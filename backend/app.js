@@ -29,10 +29,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173", // local frontend dev
-      process.env.FRONTEND_URL, // production Vercel frontend URL from env
-    ].filter(Boolean),
+    origin: true, // reflect request origin — allows any domain
     credentials: true,
   }),
 );
