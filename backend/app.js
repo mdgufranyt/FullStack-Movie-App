@@ -27,7 +27,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173", // local frontend dev
+      process.env.FRONTEND_URL, // production Vercel URL
+    ],
+    credentials: true,
+  }),
+);
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
