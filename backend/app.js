@@ -11,9 +11,6 @@ const { connectDB } = require("./lib/db");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
-// Connect to database
-connectDB().catch(console.error);
-
 var app = express();
 
 const allowedOrigins = [
@@ -46,6 +43,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Ensure DB is connected before every request (required for Vercel serverless)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error("DB connection failed:", err);
+    res.status(500).json({ success: false, msg: "Database connection failed" });
+  }
+});
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
