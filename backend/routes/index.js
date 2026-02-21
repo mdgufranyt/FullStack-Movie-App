@@ -7,8 +7,9 @@ const multer = require("multer");
 const cloudinary = require("../config/cloudinary"); // NEW
 var movieModel = require("../models/movieModel");
 
-// Use env JWT secret (fallback only for local dev)
-const secret = process.env.JWT_SECRET || "change-me";
+// Use env JWT secret — must be set in environment variables
+const secret = process.env.JWT_SECRET;
+if (!secret) throw new Error("JWT_SECRET is not set in environment variables");
 
 // Home
 router.get("/", function (req, res, next) {
@@ -127,8 +128,14 @@ router.post("/checkAdmin", async (req, res) => {
         return res.json({ success: false, msg: "User is not an admin" });
       }
 
-      // Verify admin key (you can set this in environment variables)
-      const correctAdminKey = process.env.ADMIN_KEY || "admin123"; // Set this in your .env file
+      // Verify admin key
+      const correctAdminKey = process.env.ADMIN_KEY;
+      if (!correctAdminKey) {
+        return res.json({
+          success: false,
+          msg: "Admin key not configured on server",
+        });
+      }
       if (adminKey !== correctAdminKey) {
         return res.json({ success: false, msg: "Invalid admin key" });
       }
@@ -158,7 +165,13 @@ router.post("/createAdminUser", async (req, res) => {
     const { name, username, email, password, adminKey } = req.body;
 
     // Verify admin key
-    const correctAdminKey = process.env.ADMIN_KEY || "admin123";
+    const correctAdminKey = process.env.ADMIN_KEY;
+    if (!correctAdminKey) {
+      return res.json({
+        success: false,
+        msg: "Admin key not configured on server",
+      });
+    }
     if (adminKey !== correctAdminKey) {
       return res.json({ success: false, msg: "Invalid admin key" });
     }
@@ -216,7 +229,7 @@ router.post("/uploadMovie", upload.single("movieImg"), async (req, res) => {
           (error, result) => {
             if (error) reject(error);
             else resolve(result);
-          }
+          },
         );
         stream.end(buffer);
       });
