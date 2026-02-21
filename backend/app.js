@@ -16,6 +16,26 @@ connectDB().catch(console.error);
 
 var app = express();
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL, // Vercel frontend URL
+  "http://localhost:5173", // local dev
+];
+
+console.log("Allowed origins:", allowedOrigins);
+
+// CORS must be before all other middleware and routes
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (Postman, mobile apps, etc.)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("Not allowed by CORS"), false);
+    },
+    credentials: true,
+  }),
+);
+
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -26,16 +46,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173", // local frontend dev
-      process.env.FRONTEND_URL, // production Vercel URL
-    ],
-    credentials: true,
-  }),
-);
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
