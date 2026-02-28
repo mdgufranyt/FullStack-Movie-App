@@ -8,10 +8,11 @@ import Login from "./pages/Login";
 import SingleMovie from "./pages/SingleMovie";
 import AdminLogin from "./pages/admin/AdminLogin";
 import CreateMovie from "./pages/admin/CreateMovie";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("isLoggedIn")
+    localStorage.getItem("isLoggedIn"),
   );
   const [isAdmin, setIsAdmin] = useState(localStorage.getItem("isAdmin"));
 
@@ -57,6 +58,7 @@ const App = () => {
           />
           <Route path="*" element={<NoPage />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   );
