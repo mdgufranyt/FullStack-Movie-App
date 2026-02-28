@@ -32,6 +32,7 @@ const SignUp = () => {
       .then((data) => {
         if (data.success) {
           alert("Account Created Successfully");
+          window.dispatchEvent(new Event("storage"));
           navigate("/login");
         } else {
           setError(data.msg || "Signup failed");
