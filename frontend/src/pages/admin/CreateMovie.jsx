@@ -8,6 +8,7 @@ const CreateMovie = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [video, setVideo] = useState("");
+  const [genre, setGenre] = useState("");
 
   // Function to convert YouTube URL to embed URL (same as in SingleMovie)
   const getYouTubeEmbedUrl = (url) => {
@@ -65,6 +66,7 @@ const CreateMovie = () => {
     formData.append("title", title);
     formData.append("desc", desc);
     formData.append("video", embedVideo);
+    formData.append("genre", genre);
     formData.append("movieImg", imageFile); // Append the file object, not the URL
 
     // Send to backend
@@ -124,6 +126,27 @@ const CreateMovie = () => {
               type="text"
               placeholder="YouTube Video URL (e.g., https://www.youtube.com/watch?v=VIDEO_ID)"
             />
+          </div>
+
+          <div className="inputBox w-[40vw] mt-3">
+            <select
+              required
+              onChange={(e) => setGenre(e.target.value)}
+              value={genre}
+              className="bg-[#27272A] text-white w-full p-2 rounded outline-none"
+            >
+              <option value="">-- Select Genre --</option>
+              <option value="Action">Action</option>
+              <option value="Adventure">Adventure</option>
+              <option value="Comedy">Comedy</option>
+              <option value="Drama">Drama</option>
+              <option value="Horror">Horror</option>
+              <option value="Romance">Romance</option>
+              <option value="Sci-Fi">Sci-Fi</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Animation">Animation</option>
+              <option value="Documentary">Documentary</option>
+            </select>
           </div>
 
           <div className="inputBox w-[40vw] mt-3">

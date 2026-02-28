@@ -243,6 +243,7 @@ router.post("/uploadMovie", upload.single("movieImg"), async (req, res) => {
       desc: req.body.desc,
       img: imageUrl, // Store full Cloudinary URL
       video: req.body.video,
+      genre: req.body.genre || "",
     });
 
     return res.json({
@@ -253,6 +254,22 @@ router.post("/uploadMovie", upload.single("movieImg"), async (req, res) => {
   } catch (e) {
     console.error(e);
     return res.status(500).json({ success: false, msg: "Upload failed" });
+  }
+});
+
+// Search movies by title and/or genre
+router.get("/searchMovies", async (req, res) => {
+  try {
+    const { q, genre } = req.query;
+    let filter = {};
+    if (q && q.trim()) filter.title = { $regex: q.trim(), $options: "i" };
+    if (genre && genre.trim())
+      filter.genre = { $regex: genre.trim(), $options: "i" };
+    const movies = await movieModel.find(filter).limit(20);
+    return res.json({ success: true, movies });
+  } catch (e) {
+    console.error("Search error:", e);
+    return res.json({ success: false, msg: "Search failed" });
   }
 });
 

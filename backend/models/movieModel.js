@@ -16,6 +16,7 @@ const movieSchema = new mongoose.Schema({
   desc: String,
   img: String,
   video: String,
+  genre: { type: String, default: "" },
   comments: [commentsSchema], // An array of comments
   date: {
     type: Date,

@@ -5,21 +5,22 @@ const CommentSchema = new mongoose.Schema(
     commentBy: String,
     comment: String,
     username: String,
-    date: { type: Date, default: Date.now }
+    date: { type: Date, default: Date.now },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const MovieSchema = new mongoose.Schema(
   {
     title: String,
     desc: String,
-    img: String,   // Cloudinary secure_url
+    img: String, // Cloudinary secure_url
     video: String,
+    genre: { type: String, default: "" },
     comments: [CommentSchema],
-    date: { type: Date, default: Date.now }
+    date: { type: Date, default: Date.now },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.models.Movie || mongoose.model("Movie", MovieSchema);
