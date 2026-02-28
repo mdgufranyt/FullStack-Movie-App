@@ -2,10 +2,20 @@ import React, { useEffect, useState } from "react";
 import logo from "../images/logo.png";
 import Avatar from "react-avatar";
 import { api_base_url } from "../helper";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("isAdmin");
+    navigate("/login");
+  };
 
   const getDetails = () => {
     const token = localStorage.getItem("token");
@@ -60,6 +70,12 @@ const Navbar = () => {
             name={data ? data.name : ""}
             size="40"
           />
+          <button
+            onClick={handleLogout}
+            className="ml-2 px-4 py-1.5 text-sm bg-red-600 hover:bg-red-700 text-white rounded-full transition-colors duration-200"
+          >
+            Logout
+          </button>
         </div>
       </nav>
     </>
