@@ -51,16 +51,21 @@ const Home = () => {
           className="mySwiper"
         >
           <SwiperSlide>
-            <img
+            <a href="https://fullstack-movieapp.vercel.app/singleMovie/69a2b255c3343b30c8b9ef60">
+              <img
               src="https://wallpapers.com/images/hd/spider-man-2-lva058fvoz0dpt37.jpg"
-              alt=""
+              alt="The Amazing Spider-Man 2"
             />
+            </a>
+            
           </SwiperSlide>
           <SwiperSlide>
-            <img
+            <a href="https://fullstack-movieapp.vercel.app/singleMovie/69a2b2efc3343b30c8b9ef66">
+               <img
               src="https://wallpapercave.com/wp/wp3405080.jpg"
-              alt=""
+              alt="Iron Man"
             />
+            </a>
           </SwiperSlide>
           <SwiperSlide>
             <img
