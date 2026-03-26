@@ -59,9 +59,9 @@ const Login = () => {
 
   return (
     <>
-      <div className="container w-screen min-h-screen flex flex-col items-center justify-center bg-[#09090B] text-white">
-        <div className="w-[23vw] bg-[#18181B] h-[auto] flex flex-col p-[20px] shadow-black/50 rounded-lg">
-          <h3 className="text-2xl mb-3">Login</h3>
+      <div className="container w-screen min-h-screen flex flex-col items-center justify-center bg-[#09090B] text-white px-4">
+        <div className="w-full max-w-sm sm:max-w-md bg-[#18181B] h-auto flex flex-col p-6 sm:p-[20px] shadow-black/50 rounded-lg">
+          <h3 className="text-2xl sm:text-3xl mb-4 sm:mb-3 font-bold">Login</h3>
           <form onSubmit={handleSubmit}>
             <div className="inputBox mt-3">
               <input
@@ -87,20 +87,23 @@ const Login = () => {
               />
             </div>
 
-            <p className="mb-1 mt-2 text-[14px]">
+            <p className="mb-1 mt-3 text-sm sm:text-[14px]">
               Don't have an account{" "}
-              <Link className="text-[#1D4ED8]" to="/signUp">
+              <Link className="text-[#1D4ED8] hover:underline" to="/signUp">
                 Sign Up
               </Link>
             </p>
-            {error && <p className="mb-3 text-red-500">{error}</p>}
+            {error && <p className="mb-3 text-red-500 text-sm">{error}</p>}
             {data && data.success && (
-              <p className="mb-3 text-green-500">
+              <p className="mb-3 text-green-500 text-sm">
                 Login successful! Redirecting...
               </p>
             )}
 
-            <button className="btnBlue w-full text-[15px]" disabled={isLoading}>
+            <button
+              className="btnBlue w-full text-sm sm:text-[15px]"
+              disabled={isLoading}
+            >
               {isLoading ? "Logging in..." : "Login"}
             </button>
           </form>

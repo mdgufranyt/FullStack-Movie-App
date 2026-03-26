@@ -47,12 +47,19 @@ const Home = () => {
 
   const renderSwiper = (movies) => (
     <Swiper
-      slidesPerView={6}
-      spaceBetween={0}
+      slidesPerView={1}
+      breakpoints={{
+        640: { slidesPerView: 2 },
+        768: { slidesPerView: 3 },
+        1024: { slidesPerView: 4 },
+        1280: { slidesPerView: 5 },
+        1536: { slidesPerView: 6 },
+      }}
+      spaceBetween={10}
       autoplay={{ delay: 2500, disableOnInteraction: false }}
       pagination={{ clickable: true }}
       modules={[Autoplay, Pagination]}
-      className="!h-[40vh]"
+      className="!h-auto sm:!h-[35vh] md:!h-[40vh]"
     >
       {movies.map((item, index) => (
         <SwiperSlide key={index}>
@@ -65,13 +72,13 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div className="px-[100px] mt-3">
+      <div className="px-4 sm:px-6 md:px-8 lg:px-[100px] mt-3">
         {/* Banner Swiper */}
         <Swiper
           navigation={true}
           autoplay={{ delay: 2500, disableOnInteraction: false }}
           modules={[Autoplay, Navigation]}
-          className="mySwiper"
+          className="mySwiper rounded-lg overflow-hidden"
         >
           <SwiperSlide>
             <a href="https://fullstack-movieapp.vercel.app/singleMovie/69a2b255c3343b30c8b9ef60">
@@ -99,7 +106,7 @@ const Home = () => {
 
         <div className="mb-10">
           {/* All Movies section */}
-          <h3 className="text-2xl my-5">All Movies</h3>
+          <h3 className="text-xl sm:text-2xl my-5 font-bold">All Movies</h3>
           {data && data.length > 0 ? (
             renderSwiper(data)
           ) : (
@@ -111,7 +118,7 @@ const Home = () => {
             const genreMovies = data.filter((m) => m.genre === genre);
             return (
               <div key={genre}>
-                <h3 className="text-2xl my-5">{genre}</h3>
+                <h3 className="text-xl sm:text-2xl my-5 font-bold">{genre}</h3>
                 {renderSwiper(genreMovies)}
               </div>
             );
@@ -120,7 +127,7 @@ const Home = () => {
           {/* Movies without genre (legacy / unclassified) */}
           {unclassified.length > 0 && genres.length > 0 && (
             <div>
-              <h3 className="text-2xl my-5">Other</h3>
+              <h3 className="text-xl sm:text-2xl my-5 font-bold">Other</h3>
               {renderSwiper(unclassified)}
             </div>
           )}

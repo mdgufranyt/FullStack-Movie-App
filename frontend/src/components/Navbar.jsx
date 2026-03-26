@@ -115,12 +115,19 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="h-[90px] flex items-center justify-between px-[100px] relative z-50">
-        <img className="w-[140px]" src={logo} alt="" />
+      <nav className="h-auto sm:h-[70px] md:h-[90px] flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 md:px-8 lg:px-[100px] py-3 sm:py-0 relative z-50 gap-3 sm:gap-0">
+        <img
+          className="w-[100px] sm:w-[120px] md:w-[140px]"
+          src={logo}
+          alt=""
+        />
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
           {/* Search container */}
-          <div ref={searchRef} className="relative flex items-center gap-2">
+          <div
+            ref={searchRef}
+            className="relative flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto"
+          >
             {/* Genre filter dropdown */}
             <select
               value={selectedGenre}
@@ -128,7 +135,7 @@ const Navbar = () => {
                 setSelectedGenre(e.target.value);
                 setShowDropdown(true);
               }}
-              className="bg-[#27272A] text-white text-sm px-3 py-2 rounded-full outline-none border border-[#ffffff20] cursor-pointer"
+              className="bg-[#27272A] text-white text-xs sm:text-sm px-2 sm:px-3 py-2 rounded-full outline-none border border-[#ffffff20] cursor-pointer w-full sm:w-auto"
             >
               <option value="">All Genres</option>
               {GENRES.map((g) => (
@@ -139,10 +146,10 @@ const Navbar = () => {
             </select>
 
             {/* Search input */}
-            <div className="inputBox w-[22vw] !rounded-[30px] relative">
+            <div className="inputBox w-full sm:w-[200px] md:w-[280px] lg:w-[22vw] !rounded-[30px] relative">
               <input
                 type="text"
-                className="!rounded-[30px] !pl-[20px]"
+                className="!rounded-[30px] !pl-[20px] text-sm"
                 placeholder="Search movies..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -155,7 +162,7 @@ const Navbar = () => {
 
             {/* Results dropdown */}
             {showDropdown && (
-              <div className="absolute top-[110%] right-0 w-[420px] bg-[#18181B] border border-[#ffffff15] rounded-xl shadow-2xl overflow-hidden z-50">
+              <div className="absolute top-[110%] right-0 w-[95vw] sm:w-[380px] md:w-[420px] bg-[#18181B] border border-[#ffffff15] rounded-xl shadow-2xl overflow-hidden z-50">
                 {/* Active filters display */}
                 {(searchQuery || selectedGenre) && (
                   <div className="px-4 pt-3 pb-1 flex items-center gap-2 flex-wrap">
@@ -228,13 +235,13 @@ const Navbar = () => {
 
           <Avatar
             round="50%"
-            className="cursor-pointer"
+            className="cursor-pointer flex-shrink-0"
             name={data ? data.name : ""}
-            size="40"
+            size="35"
           />
           <button
             onClick={handleLogout}
-            className="ml-2 px-4 py-1.5 text-sm bg-red-600 hover:bg-red-700 text-white rounded-full transition-colors duration-200"
+            className="ml-0 sm:ml-2 px-3 py-1.5 text-xs sm:text-sm bg-red-600 hover:bg-red-700 text-white rounded-full transition-colors duration-200 whitespace-nowrap"
           >
             Logout
           </button>

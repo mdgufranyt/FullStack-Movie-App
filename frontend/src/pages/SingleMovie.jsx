@@ -121,7 +121,7 @@ const SingleMovie = () => {
   return (
     <>
       <Navbar />
-      <div className="px-[100px]">
+      <div className="px-4 sm:px-6 md:px-8 lg:px-[100px]">
         {error && <div className="text-red-500 mb-4">Error: {error}</div>}
         {!data && !error && (
           <div className="text-gray-500 mb-4">Loading movie...</div>
@@ -130,7 +130,13 @@ const SingleMovie = () => {
         <iframe
           width="100%"
           className="rounded-[10px]"
-          height="550"
+          height={
+            typeof window !== "undefined" && window.innerWidth < 640
+              ? "300"
+              : typeof window !== "undefined" && window.innerWidth < 768
+                ? "400"
+                : "550"
+          }
           src={data ? getYouTubeEmbedUrl(data.video) : ""}
           title="YouTube video player"
           frameBorder="0"
@@ -138,12 +144,14 @@ const SingleMovie = () => {
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
         ></iframe>
-        <h3 className="text-2xl mt-4 mb-2">
+        <h3 className="text-xl sm:text-2xl mt-4 mb-2 font-bold">
           {data ? data.title : "Movie Title"}
         </h3>
-        <p className="text-[gray]">{data ? data.desc : "Movie Description"}</p>
+        <p className="text-gray-400 text-sm sm:text-base">
+          {data ? data.desc : "Movie Description"}
+        </p>
 
-        <h3 className="text-2xl mt-5 mb-3">Comments</h3>
+        <h3 className="text-xl sm:text-2xl mt-5 mb-3 font-bold">Comments</h3>
 
         <input
           onKeyUp={(e) => {
@@ -156,31 +164,31 @@ const SingleMovie = () => {
           }}
           value={comment}
           type="text"
-          className="mb-4 border-0 w-[70%] p-[5px] pl-0 border-b-[1px] border-b-[#fff] bg-transparent outline-0"
+          className="mb-4 border-0 w-full sm:w-[85%] md:w-[75%] p-[5px] pl-0 border-b-[1px] border-b-[#fff] bg-transparent outline-0 text-sm"
           placeholder="Write your comment here"
         />
 
-        <div className="comments w-[70%] mb-7">
+        <div className="comments w-full sm:w-[85%] md:w-[75%] mb-7">
           {data &&
             data.comments.map((comment, index) => (
               <div
                 key={index}
-                className="comment mb-2 w-full flex items-center p-[10px] bg-[#27272A] rounded-lg cursor-pointer"
+                className="comment mb-2 w-full flex flex-col sm:flex-row items-start sm:items-center p-3 sm:p-[10px] bg-[#27272A] rounded-lg cursor-pointer gap-3"
               >
                 <Avatar
                   name={comment.username ? comment.username : "User"}
-                  size="50"
+                  size="40"
                   round="50%"
-                  className="cursor-pointer mr-3"
+                  className="cursor-pointer flex-shrink-0"
                 />
-                <div>
-                  <p className="text-[gray] text-[14px]">
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-400 text-xs sm:text-[14px]">
                     @
                     {comment.username && comment.username.trim() !== ""
                       ? comment.username.trim()
                       : "User"}
                   </p>
-                  <p>{comment.comment}</p>
+                  <p className="text-sm break-words">{comment.comment}</p>
                 </div>
               </div>
             ))}

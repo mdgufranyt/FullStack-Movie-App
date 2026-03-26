@@ -46,9 +46,9 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="container w-screen min-h-screen flex flex-col items-center justify-center bg-[#09090B] text-white">
-        <div className="w-[23vw] bg-[#18181B] h-[auto] flex flex-col p-[20px] shadow-black/50 rounded-lg">
-          <h3 className="text-2xl mb-6">SignUp</h3>
+      <div className="container w-screen min-h-screen flex flex-col items-center justify-center bg-[#09090B] text-white px-4">
+        <div className="w-full max-w-sm sm:max-w-md bg-[#18181B] h-auto flex flex-col p-6 sm:p-[20px] shadow-black/50 rounded-lg">
+          <h3 className="text-2xl sm:text-3xl mb-6 font-bold">Sign Up</h3>
           <form onSubmit={handleSubmit}>
             <div className="inputBox">
               <input
@@ -98,15 +98,17 @@ const SignUp = () => {
               />
             </div>
 
-            <p className="mb-1 mt-2 text-[14px]">
+            <p className="mb-1 mt-3 text-sm sm:text-[14px]">
               Already have an account{" "}
-              <Link className="text-[#1D4ED8]" to="/login">
+              <Link className="text-[#1D4ED8] hover:underline" to="/login">
                 Login
               </Link>
             </p>
-            <p className="mb-3 text-red-500">{error}</p>
+            <p className="mb-3 text-red-500 text-sm">{error}</p>
 
-            <button className="btnBlue w-full text-[15px]">Sign Up</button>
+            <button className="btnBlue w-full text-sm sm:text-[15px]">
+              Sign Up
+            </button>
           </form>
         </div>
       </div>
